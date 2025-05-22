@@ -1,0 +1,323 @@
+{
+  "menu": {
+    "categories": [
+      {
+        "id": "appetizers",
+        "name": "Appetizers",
+        "description": "Start your meal with these delicious options",
+        "items": [
+          {
+            "id": "app1",
+            "name": "Crispy Calamari",
+            "description": "Lightly battered calamari served with marinara sauce",
+            "price": 12.99,
+            "image": "https://picsum.photos/123",
+            "ingredients": [
+              "squid",
+              "flour",
+              "salt",
+              "pepper",
+              "marinara sauce"
+            ],
+            "customizations": [
+              {
+                "id": "spice_level",
+                "name": "Spice Level",
+                "type": "radio",
+                "required": true,
+                "options": [
+                  {"id": "mild", "name": "Mild", "price": 0},
+                  {"id": "medium", "name": "Medium", "price": 0},
+                  {"id": "hot", "name": "Hot", "price": 0.50}
+                ]
+              },
+              {
+                "id": "dipping_sauce",
+                "name": "Extra Dipping Sauce",
+                "type": "checkbox",
+                "required": false,
+                "options": [
+                  {"id": "marinara", "name": "Marinara", "price": 1.00},
+                  {"id": "aioli", "name": "Garlic Aioli", "price": 1.50}
+                ]
+              }
+            ]
+          },
+          {
+            "id": "app2",
+            "name": "Spinach Artichoke Dip",
+            "description": "Creamy spinach and artichoke dip served with tortilla chips",
+            "price": 10.99,
+            "image": "https://picsum.photos/187",
+            "ingredients": [
+              "spinach",
+              "artichoke hearts",
+              "cream cheese",
+              "parmesan",
+              "tortilla chips"
+            ],
+            "customizations": [
+              {
+                "id": "extra_chips",
+                "name": "Extra Chips",
+                "type": "checkbox",
+                "required": false,
+                "options": [
+                  {"id": "chips", "name": "Extra Tortilla Chips", "price": 2.00}
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "entrees",
+        "name": "Main Courses",
+        "description": "Hearty and delicious main dishes",
+        "items": [
+          {
+            "id": "ent1",
+            "name": "Grilled Salmon",
+            "description": "Fresh Atlantic salmon grilled to perfection with seasonal vegetables",
+            "price": 24.99,
+            "image": "https://picsum.photos/156",
+            "ingredients": [
+              "salmon fillet",
+              "olive oil",
+              "lemon",
+              "garlic",
+              "seasonal vegetables",
+              "herbs"
+            ],
+            "customizations": [
+              {
+                "id": "cooking_temp",
+                "name": "Cooking Temperature",
+                "type": "radio",
+                "required": true,
+                "options": [
+                  {"id": "medium_rare", "name": "Medium Rare", "price": 0},
+                  {"id": "medium", "name": "Medium", "price": 0},
+                  {"id": "well_done", "name": "Well Done", "price": 0}
+                ]
+              },
+              {
+                "id": "sides",
+                "name": "Side Options",
+                "type": "radio",
+                "required": true,
+                "options": [
+                  {"id": "rice", "name": "Wild Rice", "price": 0},
+                  {"id": "potatoes", "name": "Roasted Potatoes", "price": 0},
+                  {"id": "quinoa", "name": "Quinoa Pilaf", "price": 2.00}
+                ]
+              }
+            ]
+          },
+          {
+            "id": "ent2",
+            "name": "Ribeye Steak",
+            "description": "12oz ribeye steak cooked to your preference with choice of sides",
+            "price": 32.99,
+            "image": "https://picsum.photos/142",
+            "ingredients": [
+              "ribeye steak",
+              "butter",
+              "garlic",
+              "rosemary",
+              "thyme",
+              "salt",
+              "pepper"
+            ],
+            "customizations": [
+              {
+                "id": "cooking_temp",
+                "name": "Cooking Temperature",
+                "type": "radio",
+                "required": true,
+                "options": [
+                  {"id": "rare", "name": "Rare", "price": 0},
+                  {"id": "medium_rare", "name": "Medium Rare", "price": 0},
+                  {"id": "medium", "name": "Medium", "price": 0},
+                  {"id": "medium_well", "name": "Medium Well", "price": 0},
+                  {"id": "well_done", "name": "Well Done", "price": 0}
+                ]
+              },
+              {
+                "id": "steak_sauce",
+                "name": "Steak Sauce",
+                "type": "checkbox",
+                "required": false,
+                "options": [
+                  {"id": "peppercorn", "name": "Peppercorn Sauce", "price": 2.50},
+                  {"id": "bearnaise", "name": "Béarnaise Sauce", "price": 2.50},
+                  {"id": "mushroom", "name": "Mushroom Sauce", "price": 2.50}
+                ]
+              },
+              {
+                "id": "sides",
+                "name": "Side Options (Choose 2)",
+                "type": "multiselect",
+                "required": true,
+                "max_selections": 2,
+                "options": [
+                  {"id": "mashed", "name": "Mashed Potatoes", "price": 0},
+                  {"id": "fries", "name": "Truffle Fries", "price": 1.50},
+                  {"id": "asparagus", "name": "Grilled Asparagus", "price": 0},
+                  {"id": "mac", "name": "Mac and Cheese", "price": 2.00}
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "desserts",
+        "name": "Desserts",
+        "description": "Sweet treats to finish your meal",
+        "items": [
+          {
+            "id": "des1",
+            "name": "Chocolate Lava Cake",
+            "description": "Warm chocolate cake with a molten center, served with vanilla ice cream",
+            "price": 9.99,
+            "image": "https://picsum.photos/178",
+            "ingredients": [
+              "chocolate",
+              "flour",
+              "eggs",
+              "butter",
+              "sugar",
+              "vanilla ice cream"
+            ],
+            "customizations": [
+              {
+                "id": "ice_cream",
+                "name": "Ice Cream Flavor",
+                "type": "radio",
+                "required": true,
+                "options": [
+                  {"id": "vanilla", "name": "Vanilla", "price": 0},
+                  {"id": "chocolate", "name": "Chocolate", "price": 0},
+                  {"id": "strawberry", "name": "Strawberry", "price": 0}
+                ]
+              },
+              {
+                "id": "toppings",
+                "name": "Additional Toppings",
+                "type": "checkbox",
+                "required": false,
+                "options": [
+                  {"id": "whipped", "name": "Whipped Cream", "price": 0.75},
+                  {"id": "berries", "name": "Fresh Berries", "price": 1.50},
+                  {"id": "caramel", "name": "Caramel Drizzle", "price": 0.75}
+                ]
+              }
+            ]
+          },
+          {
+            "id": "des2",
+            "name": "New York Cheesecake",
+            "description": "Classic New York style cheesecake with graham cracker crust",
+            "price": 8.99,
+            "image": "https://picsum.photos/165",
+            "ingredients": [
+              "cream cheese",
+              "sugar",
+              "eggs",
+              "vanilla",
+              "graham crackers",
+              "butter"
+            ],
+            "customizations": [
+              {
+                "id": "sauce",
+                "name": "Sauce Options",
+                "type": "radio",
+                "required": false,
+                "options": [
+                  {"id": "none", "name": "No Sauce", "price": 0},
+                  {"id": "strawberry", "name": "Strawberry Sauce", "price": 1.00},
+                  {"id": "chocolate", "name": "Chocolate Sauce", "price": 1.00},
+                  {"id": "caramel", "name": "Caramel Sauce", "price": 1.00}
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "beverages",
+        "name": "Beverages",
+        "description": "Refreshing drinks to complement your meal",
+        "items": [
+          {
+            "id": "bev1",
+            "name": "Craft Lemonade",
+            "description": "Freshly squeezed lemonade with your choice of flavor",
+            "price": 4.99,
+            "image": "https://picsum.photos/132",
+            "ingredients": [
+              "lemon juice",
+              "sugar",
+              "water",
+              "ice"
+            ],
+            "customizations": [
+              {
+                "id": "flavor",
+                "name": "Flavor",
+                "type": "radio",
+                "required": false,
+                "options": [
+                  {"id": "classic", "name": "Classic", "price": 0},
+                  {"id": "strawberry", "name": "Strawberry", "price": 0.50},
+                  {"id": "raspberry", "name": "Raspberry", "price": 0.50},
+                  {"id": "mint", "name": "Mint", "price": 0.50}
+                ]
+              }
+            ]
+          },
+          {
+            "id": "bev2",
+            "name": "Specialty Coffee",
+            "description": "Premium coffee made with locally roasted beans",
+            "price": 5.99,
+            "image": "https://picsum.photos/198",
+            "ingredients": [
+              "coffee beans",
+              "filtered water"
+            ],
+            "customizations": [
+              {
+                "id": "milk",
+                "name": "Milk Options",
+                "type": "radio",
+                "required": false,
+                "options": [
+                  {"id": "none", "name": "No Milk", "price": 0},
+                  {"id": "whole", "name": "Whole Milk", "price": 0},
+                  {"id": "skim", "name": "Skim Milk", "price": 0},
+                  {"id": "almond", "name": "Almond Milk", "price": 0.75},
+                  {"id": "oat", "name": "Oat Milk", "price": 0.75}
+                ]
+              },
+              {
+                "id": "sweetener",
+                "name": "Sweetener",
+                "type": "radio",
+                "required": false,
+                "options": [
+                  {"id": "none", "name": "No Sweetener", "price": 0},
+                  {"id": "sugar", "name": "Sugar", "price": 0},
+                  {"id": "honey", "name": "Honey", "price": 0.50},
+                  {"id": "syrup", "name": "Vanilla Syrup", "price": 0.75}
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

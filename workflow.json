@@ -1,0 +1,300 @@
+{
+  "name": "Waiter AI Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "waiter-ai",
+        "options": {}
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "content": "={{ $json.body.message }}",
+        "options": {}
+      },
+      "name": "Process Customer Message",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.message.toLowerCase().includes('available') || $json.message.toLowerCase().includes('what') && $json.message.toLowerCase().includes('menu') }}",
+              "operation": "equal",
+              "value2": "true"
+            }
+          ]
+        }
+      },
+      "name": "Is Availability Question?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "// This function would connect to the restaurant database\n// and return the currently available menu items based on time\n\nconst currentTime = new Date();\nconst currentHour = currentTime.getHours();\n\n// Simulate different menus based on time of day\nlet availableMenu;\n\nif (currentHour >= 6 && currentHour < 11) {\n  // Breakfast menu\n  availableMenu = {\n    category: \"Breakfast\",\n    items: [\n      { id: \"B1\", name: \"Pancakes\", price: 8.99, description: \"Fluffy pancakes with maple syrup\" },\n      { id: \"B2\", name: \"Eggs Benedict\", price: 12.99, description: \"Poached eggs on English muffin with hollandaise sauce\" },\n      { id: \"B3\", name: \"Avocado Toast\", price: 10.99, description: \"Whole grain toast with smashed avocado and poached egg\" }\n    ]\n  };\n} else if (currentHour >= 11 && currentHour < 16) {\n  // Lunch menu\n  availableMenu = {\n    category: \"Lunch\",\n    items: [\n      { id: \"L1\", name: \"Caesar Salad\", price: 9.99, description: \"Crisp romaine lettuce with Caesar dressing and croutons\" },\n      { id: \"L2\", name: \"Burger\", price: 14.99, description: \"Angus beef patty with lettuce, tomato, and special sauce\" },\n      { id: \"L3\", name: \"Club Sandwich\", price: 12.99, description: \"Triple-decker sandwich with turkey, bacon, and avocado\" }\n    ]\n  };\n} else {\n  // Dinner menu\n  availableMenu = {\n    category: \"Dinner\",\n    items: [\n      { id: \"D1\", name: \"Steak\", price: 24.99, description: \"12oz ribeye with roasted potatoes\" },\n      { id: \"D2\", name: \"Salmon\", price: 19.99, description: \"Grilled salmon with asparagus and lemon butter sauce\" },\n      { id: \"D3\", name: \"Pasta Primavera\", price: 16.99, description: \"Fettuccine with seasonal vegetables in a light cream sauce\" }\n    ]\n  };\n}\n\nreturn { availableMenu };"
+      },
+      "name": "Item Getter",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        850,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "// This function would retrieve customization options for a specific menu item\n\nconst itemId = $input.item.json.itemId || '';\n\n// Simulate customization options for different items\nconst customizationOptions = {\n  // Breakfast items\n  \"B1\": { // Pancakes\n    options: [\n      { name: \"Toppings\", choices: [\"Blueberries\", \"Strawberries\", \"Chocolate Chips\", \"Banana\"], multiSelect: true },\n      { name: \"Syrup\", choices: [\"Maple\", \"Blueberry\", \"Strawberry\", \"Sugar-free\"], multiSelect: false }\n    ]\n  },\n  \"B2\": { // Eggs Benedict\n    options: [\n      { name: \"Protein\", choices: [\"Ham\", \"Bacon\", \"Smoked Salmon\", \"Avocado\"], multiSelect: false },\n      { name: \"Egg Style\", choices: [\"Poached\", \"Over Easy\"], multiSelect: false }\n    ]\n  },\n  \"B3\": { // Avocado Toast\n    options: [\n      { name: \"Bread\", choices: [\"Whole Grain\", \"Sourdough\", \"Rye\", \"Gluten-free\"], multiSelect: false },\n      { name: \"Toppings\", choices: [\"Poached Egg\", \"Feta Cheese\", \"Tomatoes\", \"Red Pepper Flakes\"], multiSelect: true }\n    ]\n  },\n  // Lunch items\n  \"L1\": { // Caesar Salad\n    options: [\n      { name: \"Protein\", choices: [\"Chicken\", \"Shrimp\", \"Salmon\", \"None\"], multiSelect: false },\n      { name: \"Dressing\", choices: [\"Regular\", \"Light\", \"On the side\"], multiSelect: false }\n    ]\n  },\n  \"L2\": { // Burger\n    options: [\n      { name: \"Doneness\", choices: [\"Rare\", \"Medium Rare\", \"Medium\", \"Medium Well\", \"Well Done\"], multiSelect: false },\n      { name: \"Cheese\", choices: [\"American\", \"Cheddar\", \"Swiss\", \"Blue Cheese\", \"None\"], multiSelect: false },\n      { name: \"Toppings\", choices: [\"Lettuce\", \"Tomato\", \"Onion\", \"Pickles\", \"Avocado\", \"Bacon\"], multiSelect: true },\n      { name: \"Side\", choices: [\"Fries\", \"Sweet Potato Fries\", \"Salad\", \"Onion Rings\"], multiSelect: false }\n    ]\n  },\n  \"L3\": { // Club Sandwich\n    options: [\n      { name: \"Bread\", choices: [\"White\", \"Wheat\", \"Sourdough\", \"Rye\"], multiSelect: false },\n      { name: \"Side\", choices: [\"Fries\", \"Chips\", \"Salad\", \"Fruit\"], multiSelect: false }\n    ]\n  },\n  // Dinner items\n  \"D1\": { // Steak\n    options: [\n      { name: \"Doneness\", choices: [\"Rare\", \"Medium Rare\", \"Medium\", \"Medium Well\", \"Well Done\"], multiSelect: false },\n      { name: \"Sauce\", choices: [\"Peppercorn\", \"Béarnaise\", \"Mushroom\", \"None\"], multiSelect: false },\n      { name: \"Side\", choices: [\"Mashed Potatoes\", \"Baked Potato\", \"Fries\", \"Vegetables\"], multiSelect: false }\n    ]\n  },\n  \"D2\": { // Salmon\n    options: [\n      { name: \"Cooking Style\", choices: [\"Grilled\", \"Pan-Seared\", \"Baked\"], multiSelect: false },\n      { name: \"Sauce\", choices: [\"Lemon Butter\", \"Dill\", \"Teriyaki\", \"None\"], multiSelect: false },\n      { name: \"Side\", choices: [\"Rice\", \"Quinoa\", \"Vegetables\", \"Potato\"], multiSelect: false }\n    ]\n  },\n  \"D3\": { // Pasta Primavera\n    options: [\n      { name: \"Pasta Type\", choices: [\"Fettuccine\", \"Penne\", \"Spaghetti\", \"Gluten-free\"], multiSelect: false },\n      { name: \"Sauce\", choices: [\"Cream\", \"Olive Oil\", \"Tomato\"], multiSelect: false },\n      { name: \"Add Protein\", choices: [\"Chicken\", \"Shrimp\", \"None\"], multiSelect: false }\n    ]\n  }\n};\n\nconst result = customizationOptions[itemId] || { options: [] };\nreturn { customizationOptions: result };"
+      },
+      "name": "Customization Getter",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1050,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "mergeByPosition",
+        "join": {
+          "output": "allOtherOutputs"
+        },
+        "options": {}
+      },
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        1250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "// This function generates the AI response based on the available menu and customer query\n\nconst customerMessage = $input.first().json.message.toLowerCase();\nconst availableMenu = $input.first().json.availableMenu;\nconst customizationOptions = $input.last().json.customizationOptions;\n\nlet response = \"\";\n\n// Check if this is an initial query about what's available\nif (customerMessage.includes('available') || (customerMessage.includes('what') && customerMessage.includes('menu'))) {\n  // Generate response about available menu\n  response = `We are currently serving our ${availableMenu.category} menu. Here are the items available:\\n\\n`;\n  \n  availableMenu.items.forEach(item => {\n    response += `- ${item.name} ($${item.price.toFixed(2)}): ${item.description}\\n`;\n  });\n  \n  response += \"\\nWould you like to know more about any specific item or would you like to place an order?\";\n}\n// Check if customer is asking about a specific item\nelse if (customerMessage.includes('customization') || customerMessage.includes('options')) {\n  // Try to identify which item they're asking about\n  let itemId = null;\n  let itemName = null;\n  \n  // Simple item matching logic (could be improved with NLP)\n  for (const category in availableMenu) {\n    if (Array.isArray(availableMenu.items)) {\n      for (const item of availableMenu.items) {\n        if (customerMessage.includes(item.name.toLowerCase())) {\n          itemId = item.id;\n          itemName = item.name;\n          break;\n        }\n      }\n    }\n  }\n  \n  if (itemId && customizationOptions && customizationOptions.options) {\n    response = `Here are the customization options for ${itemName}:\\n\\n`;\n    \n    customizationOptions.options.forEach(option => {\n      response += `${option.name}: ${option.choices.join(', ')}\\n`;\n    });\n    \n    response += \"\\nHow would you like your item customized?\";\n  } else {\n    response = \"I'm not sure which item you're asking about. Could you please specify the menu item you're interested in?\";\n  }\n}\n// Default response for other queries\nelse {\n  response = \"I'm your AI waiter assistant. You can ask me about our menu, available items, or customization options. How can I help you today?\";\n}\n\nreturn { aiResponse: response };"
+      },
+      "name": "Generate AI Response",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ {response: $json.aiResponse} }}",
+        "options": {}
+      },
+      "name": "Webhook Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "// This function would handle specific item inquiries\n// It would extract the item ID from the customer's message\n\nconst customerMessage = $input.item.json.message.toLowerCase();\nlet itemId = null;\n\n// Simple item matching logic (in a real system, this would use NLP)\n// For this example, we'll just check if certain item names are mentioned\nif (customerMessage.includes('pancake')) {\n  itemId = \"B1\";\n} else if (customerMessage.includes('eggs benedict')) {\n  itemId = \"B2\";\n} else if (customerMessage.includes('avocado toast')) {\n  itemId = \"B3\";\n} else if (customerMessage.includes('caesar') || customerMessage.includes('salad')) {\n  itemId = \"L1\";\n} else if (customerMessage.includes('burger')) {\n  itemId = \"L2\";\n} else if (customerMessage.includes('club') || customerMessage.includes('sandwich')) {\n  itemId = \"L3\";\n} else if (customerMessage.includes('steak')) {\n  itemId = \"D1\";\n} else if (customerMessage.includes('salmon')) {\n  itemId = \"D2\";\n} else if (customerMessage.includes('pasta') || customerMessage.includes('primavera')) {\n  itemId = \"D3\";\n}\n\nreturn { itemId };"
+      },
+      "name": "Extract Item ID",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        850,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.message }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "help"
+            },
+            {
+              "value2": "hi"
+            },
+            {
+              "value2": "hello"
+            }
+          ]
+        }
+      },
+      "name": "Is Greeting?",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        650,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Generate a welcome message\n\nreturn {\n  aiResponse: \"Hello! I'm your AI waiter assistant. I can help you with our menu, available items, and customization options. What would you like to know about our offerings today?\"\n};"
+      },
+      "name": "Generate Welcome",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        850,
+        600
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Process Customer Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Customer Message": {
+      "main": [
+        [
+          {
+            "node": "Is Availability Question?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Availability Question?": {
+      "main": [
+        [
+          {
+            "node": "Item Getter",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Extract Item ID",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Is Greeting?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Getter": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customization Getter": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Generate AI Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate AI Response": {
+      "main": [
+        [
+          {
+            "node": "Webhook Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Item ID": {
+      "main": [
+        [
+          {
+            "node": "Customization Getter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Greeting?": {
+      "main": [
+        [
+          {
+            "node": "Generate Welcome",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Welcome": {
+      "main": [
+        [
+          {
+            "node": "Webhook Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {},
+  "versionId": "1",
+  "id": "1",
+  "meta": {
+    "instanceId": "1"
+  },
+  "tags": []
+}
