@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/gorilla/mux"
 )
@@ -85,6 +86,16 @@ type Cart struct {
 	TotalPrice float64    `json:"total_price"`
 }
 
+// ChatMessage represents a chat message
+type ChatMessage struct {
+	Message  string `json:"message"`
+}
+
+// ChatResponse represents a response to a chat message
+type ChatResponse struct {
+	Response string `json:"response"`
+}
+
 var menuData Menu
 var cart Cart
 
@@ -97,6 +108,9 @@ func main() {
 
 	// Create router
 	r := mux.NewRouter()
+	
+	// Add CORS middleware
+	r.Use(corsMiddleware)
 
 	// Define routes - all using query parameters
 	// Menu routes
@@ -118,6 +132,25 @@ func main() {
 	port := 8080
 	fmt.Printf("Server starting on port %d...\n", port)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", port), r))
+}
+
+// corsMiddleware adds CORS headers to every response
+func corsMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Set CORS headers
+		w.Header().Set("Access-Control-Allow-Origin", "*") // Allow any origin
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+		
+		// Handle preflight requests
+		if r.Method == "OPTIONS" {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+		
+		// Call the next handler
+		next.ServeHTTP(w, r)
+	})
 }
 
 func loadMenuData() error {
