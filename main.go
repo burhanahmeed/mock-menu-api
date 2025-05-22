@@ -86,16 +86,6 @@ type Cart struct {
 	TotalPrice float64    `json:"total_price"`
 }
 
-// ChatMessage represents a chat message
-type ChatMessage struct {
-	Message  string `json:"message"`
-}
-
-// ChatResponse represents a response to a chat message
-type ChatResponse struct {
-	Response string `json:"response"`
-}
-
 var menuData Menu
 var cart Cart
 
