@@ -1,5 +1,38 @@
 {
   "menu": {
+    "allPossibleIngredients": [
+      {"name": "squid", "price": 2.50},
+      {"name": "flour", "price": 0.50},
+      {"name": "salt", "price": 0.25},
+      {"name": "pepper", "price": 0.25},
+      {"name": "marinara sauce", "price": 1.00},
+      {"name": "spinach", "price": 1.50},
+      {"name": "artichoke hearts", "price": 2.00},
+      {"name": "cream cheese", "price": 1.75},
+      {"name": "parmesan", "price": 1.50},
+      {"name": "tortilla chips", "price": 1.25},
+      {"name": "salmon fillet", "price": 8.00},
+      {"name": "olive oil", "price": 0.75},
+      {"name": "lemon", "price": 0.50},
+      {"name": "garlic", "price": 0.50},
+      {"name": "seasonal vegetables", "price": 2.50},
+      {"name": "herbs", "price": 1.00},
+      {"name": "ribeye steak", "price": 12.00},
+      {"name": "butter", "price": 0.75},
+      {"name": "rosemary", "price": 0.50},
+      {"name": "thyme", "price": 0.50},
+      {"name": "chocolate", "price": 1.50},
+      {"name": "eggs", "price": 1.00},
+      {"name": "sugar", "price": 0.50},
+      {"name": "vanilla ice cream", "price": 2.00},
+      {"name": "graham crackers", "price": 1.25},
+      {"name": "vanilla", "price": 0.75},
+      {"name": "lemon juice", "price": 0.75},
+      {"name": "water", "price": 0.00},
+      {"name": "ice", "price": 0.25},
+      {"name": "coffee beans", "price": 2.50},
+      {"name": "filtered water", "price": 0.25}
+    ],
     "categories": [
       {
         "id": "appetizers",
