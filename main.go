@@ -347,12 +347,15 @@ func getCart(w http.ResponseWriter, r *http.Request) {
 func addToCart(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	
-	// Parse the request body
+	// Minimal request body structure
 	var requestBody struct {
-		ItemID         string                  `json:"item_id"`
-		Quantity       int                     `json:"quantity"`
-		Customizations []SelectedCustomization `json:"customizations"`
+		ItemID   string                   `json:"item_id"`
+		Quantity int                      `json:"qty,omitempty"`
+		Options  map[string]interface{}   `json:"opt,omitempty"`
 	}
+	
+	// Set default values
+	requestBody.Quantity = 1
 	
 	err := json.NewDecoder(r.Body).Decode(&requestBody)
 	if err != nil {
@@ -369,12 +372,10 @@ func addToCart(w http.ResponseWriter, r *http.Request) {
 	}
 	
 	// Validate the quantity
-	if requestBody.Quantity <= 0 {
-		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(map[string]string{"error": "Quantity must be greater than 0"})
-		return
+	if requestBody.Quantity < 1 {
+		requestBody.Quantity = 1
 	}
-	
+
 	// Find the item in the menu
 	var item Item
 	itemFound := false
@@ -398,13 +399,41 @@ func addToCart(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	
-	// Calculate the total price including customizations
+	// Process customizations if any
+	var customizations []SelectedCustomization
 	totalPrice := item.Price
-	for _, customization := range requestBody.Customizations {
-		for _, option := range customization.SelectedOptions {
-			totalPrice += option.Price
+
+	if requestBody.Options != nil && len(requestBody.Options) > 0 {
+		// Convert simplified options to the internal format
+		for optID, selectedOpts := range requestBody.Options {
+			customization := SelectedCustomization{
+				ID:   optID,
+				Name: optID, // Use ID as name if not provided
+			}
+
+			// Handle selected options - support both single value and array of values
+			switch v := selectedOpts.(type) {
+			case string, float64, int, bool:
+				// Single value
+				customization.SelectedOptions = append(customization.SelectedOptions, SelectedOption{
+					ID:    fmt.Sprint(v),
+					Name:  fmt.Sprint(v),
+					Price: 0, // Default price
+				})
+			case []interface{}:
+				// Array of values
+				for _, opt := range v {
+					customization.SelectedOptions = append(customization.SelectedOptions, SelectedOption{
+						ID:    fmt.Sprint(opt),
+						Name:  fmt.Sprint(opt),
+						Price: 0, // Default price
+					})
+				}
+			}
+			customizations = append(customizations, customization)
 		}
 	}
+
 	totalPrice *= float64(requestBody.Quantity)
 	
 	// Create a new cart item
@@ -414,7 +443,7 @@ func addToCart(w http.ResponseWriter, r *http.Request) {
 		Name:           item.Name,
 		Price:          item.Price,
 		Quantity:       requestBody.Quantity,
-		Customizations: requestBody.Customizations,
+		Customizations: customizations,
 		TotalPrice:     totalPrice,
 	}
 	
