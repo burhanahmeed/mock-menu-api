@@ -31,9 +31,165 @@
       {"name": "water", "price": 0.00},
       {"name": "ice", "price": 0.25},
       {"name": "coffee beans", "price": 2.50},
-      {"name": "filtered water", "price": 0.25}
+      {"name": "filtered water", "price": 0.25},
+      {"name": "pizza dough", "price": 3.00},
+      {"name": "tomato sauce", "price": 1.25},
+      {"name": "fresh mozzarella", "price": 2.50},
+      {"name": "mozzarella cheese", "price": 2.00},
+      {"name": "fresh basil", "price": 1.00},
+      {"name": "pepperoni", "price": 2.50},
+      {"name": "oregano", "price": 0.50},
+      {"name": "bell peppers", "price": 1.25},
+      {"name": "mushrooms", "price": 1.50},
+      {"name": "red onions", "price": 0.75},
+      {"name": "black olives", "price": 1.00}
     ],
     "categories": [
+      {
+        "id": "pizzas",
+        "name": "Pizzas",
+        "description": "Our signature handcrafted pizzas with fresh ingredients",
+        "items": [
+          {
+            "id": "pizza1",
+            "name": "Margherita Pizza",
+            "description": "Classic pizza with fresh mozzarella, tomatoes, and basil",
+            "price": 14.99,
+            "image": "https://hips.hearstapps.com/hmg-prod/images/classic-cheese-pizza-recipe-2-64429a0cb408b.jpg?crop=0.6666666666666667xw:1xh;center,top&resize=1200:*",
+            "ingredients": [
+              "pizza dough",
+              "tomato sauce",
+              "fresh mozzarella",
+              "fresh basil",
+              "olive oil",
+              "salt"
+            ],
+            "customizations": [
+              {
+                "id": "size",
+                "name": "Size",
+                "type": "radio",
+                "required": true,
+                "options": [
+                  {"id": "medium", "name": "Medium (12\")", "price": 0},
+                  {"id": "large", "name": "Large (14\")", "price": 3.00},
+                  {"id": "xl", "name": "Extra Large (16\")", "price": 5.00}
+                ]
+              },
+              {
+                "id": "crust",
+                "name": "Crust Type",
+                "type": "radio",
+                "required": true,
+                "options": [
+                  {"id": "regular", "name": "Regular", "price": 0},
+                  {"id": "thin", "name": "Thin Crust", "price": 0},
+                  {"id": "stuffed", "name": "Stuffed Crust", "price": 2.50}
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pizza2",
+            "name": "Pepperoni Supreme",
+            "description": "Loaded with pepperoni, mozzarella cheese, and our signature tomato sauce",
+            "price": 16.99,
+            "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Pizza-3007395.jpg/1200px-Pizza-3007395.jpg",
+            "ingredients": [
+              "pizza dough",
+              "tomato sauce",
+              "mozzarella cheese",
+              "pepperoni",
+              "oregano"
+            ],
+            "customizations": [
+              {
+                "id": "size",
+                "name": "Size",
+                "type": "radio",
+                "required": true,
+                "options": [
+                  {"id": "medium", "name": "Medium (12\")", "price": 0},
+                  {"id": "large", "name": "Large (14\")", "price": 3.00},
+                  {"id": "xl", "name": "Extra Large (16\")", "price": 5.00}
+                ]
+              },
+              {
+                "id": "crust",
+                "name": "Crust Type",
+                "type": "radio",
+                "required": true,
+                "options": [
+                  {"id": "regular", "name": "Regular", "price": 0},
+                  {"id": "thin", "name": "Thin Crust", "price": 0},
+                  {"id": "stuffed", "name": "Stuffed Crust", "price": 2.50}
+                ]
+              },
+              {
+                "id": "extra_cheese",
+                "name": "Extra Cheese",
+                "type": "checkbox",
+                "required": false,
+                "options": [
+                  {"id": "extra_cheese", "name": "Add Extra Cheese", "price": 1.50}
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pizza3",
+            "name": "Veggie Delight",
+            "description": "Fresh vegetables including bell peppers, mushrooms, onions, and olives",
+            "price": 15.99,
+            "image": "https://www.allrecipes.com/thmb/fFW1o307WSqFFYQ3-QXYVpnFj6E=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/48727-Mikes-homemade-pizza-DDMFS-beauty-4x3-BG-2974-a7a9842c14e34ca699f3b7d7143256cf.jpg",
+            "ingredients": [
+              "pizza dough",
+              "tomato sauce",
+              "mozzarella cheese",
+              "bell peppers",
+              "mushrooms",
+              "red onions",
+              "black olives",
+              "spinach"
+            ],
+            "customizations": [
+              {
+                "id": "size",
+                "name": "Size",
+                "type": "radio",
+                "required": true,
+                "options": [
+                  {"id": "medium", "name": "Medium (12\")", "price": 0},
+                  {"id": "large", "name": "Large (14\")", "price": 3.00},
+                  {"id": "xl", "name": "Extra Large (16\")", "price": 5.00}
+                ]
+              },
+              {
+                "id": "crust",
+                "name": "Crust Type",
+                "type": "radio",
+                "required": true,
+                "options": [
+                  {"id": "regular", "name": "Regular", "price": 0},
+                  {"id": "thin", "name": "Thin Crust", "price": 0},
+                  {"id": "stuffed", "name": "Stuffed Crust", "price": 2.50}
+                ]
+              },
+              {
+                "id": "no_cheese",
+                "name": "Cheese Options",
+                "type": "radio",
+                "required": false,
+                "options": [
+                  {"id": "regular", "name": "Regular Cheese", "price": 0},
+                  {"id": "extra", "name": "Extra Cheese", "price": 1.50},
+                  {"id": "none", "name": "No Cheese", "price": 0}
+                ]
+              }
+            ]
+          }
+        ]
+      },
       {
         "id": "appetizers",
         "name": "Appetizers",
